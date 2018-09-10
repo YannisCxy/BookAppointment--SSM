@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnic.dao.IUserDao">
+    <!--插入-->
+    <insert id="insertUser">
+        insert into bam.user(username, password, name, sex, phone, idnumber) value (#{username}, #{password}, #{name},#{sex}, #{phone}, #{idnumber})
+    </insert>
+    <!--删除-->
+    <delete id="deleteUser">
+        delete from bam.user where id =#{id}
+    </delete>
+    <!--修改-->
+    <update id="updateUser">
+        update bam.user set password=#{password}, phone=#{phone} where username=#{username};
+    </update>
+    <!--根据id查询-->
+    <select id="selectUserById" resultType="User">
+        select id,username,password,name,sex,phone,idnumber from bam.user where id = #{id}
+    </select>
+    <!--查询所有-->
+    <select id="selectUserAll" resultType="User">
+        select * from bam.user
+    </select>
+    <!--根据用户名查询-->
+    <select id="selectUserByUName" resultType="User">
+        select id,username,password,name,sex,phone,idnumber from bam.user where username = #{username}
+    </select>
+    <!--用户名模糊查询-->
+    <select id="selectUserByUsername" resultType="User">
+        select * from bam.user where username like '%' #{username} '%'
+    </select>
+    <!--根据唯一用户名查询-->
+    <select id="verifyUser" resultType="User">
+        select id,username,password,name,sex,phone,idnumber from bam.user where username = #{username}
+    </select>
+</mapper>

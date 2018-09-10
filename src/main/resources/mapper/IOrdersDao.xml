@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnic.dao.IOrdersDao">
+    <!--插入-->
+    <insert id="insertOrders">
+        insert into bam.orders(user_id, user_username, book_id, book_name, starttime, finishtime, status) values (#{user_id},#{user_username},#{book_id},#{book_name},#{starttime},#{finishtime},#{status})
+    </insert>
+    <!--删除-->
+    <delete id="deleteOrders">
+        delete from bam.orders where id =#{id}
+    </delete>
+    <!--修改-->
+    <update id="updateOrders">
+        update bam.orders set orders.status=#{status} where id=#{id};
+    </update>
+    <!--根据id查询-->
+    <select id="selectOrdersById" resultType="Orders">
+        select * from bam.orders where id=#{id}
+    </select>
+    <!--查询所有-->
+    <select id="selectOrdersAll" resultType="Orders">
+        select * from bam.orders
+    </select>
+    <!--通过用户名id查找预约单-->
+    <select id="selectOrdersByUId" resultType="Orders">
+        select * from bam.orders where user_id like #{user_id}
+    </select>
+    <!--通过用户名查找预约单-->
+    <select id="selectOrdersByUName" resultType="Orders">
+        select * from bam.orders where user_username like #{user_username}
+    </select>
+    <!--通过书籍id查找预约单-->
+    <select id="selectOrdersByBId" resultType="Orders">
+        select * from bam.orders where book_id like #{book_id}
+    </select>
+    <!--通过预约时间查找预约单-->
+    <select id="selectOBySTime" resultType="Orders">
+        select * from bam.orders where starttime like #{starttime}
+    </select>
+    <!--通过状态查找预约单-->
+    <select id="selectOByStatus" resultType="Orders">
+        select * from bam.orders where status like #{status}
+    </select>
+    <!--通过某用户的某单状态查找预约单-->
+    <select id="selectOByUserAStatus" resultType="Orders">
+        select * from bam.orders where orders.status = #{status} and orders.user_username = #{user_username}
+    </select>
+    <!--通过book_id和用户名来查询订单，防止重复预约-->
+    <select id="selectOByUNBid" resultType="Orders">
+        select * from bam.orders where user_username = #{user_username} and book_id = #{book_id} and status = #{status}
+    </select>
+</mapper>

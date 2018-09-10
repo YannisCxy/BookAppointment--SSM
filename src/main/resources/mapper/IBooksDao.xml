@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnic.dao.IBooksDao">
+    <!--添加书籍-->
+    <insert id="insertBooks">
+        insert into bam.books(book_name,book_type,book_price,book_publish,book_number,book_text)values (#{book_name},#{book_type},#{book_price},#{book_publish},#{book_number},#{book_text})
+    </insert>
+    <!--删除-->
+    <delete id="deleteBooks">
+        delete from bam.books where id=#{xxx}
+    </delete>
+    <!--修改-->
+    <update id="updateBooks">
+        update bam.books set book_number=#{book_number}, book_text=#{book_text}
+    </update>
+    <!--减少馆藏数量-->
+    <update id="reduceBooksNum">
+        update bam.books set book_number = book_number-1 where id = #{id} and book_number > 0
+    </update>
+    <!--增加馆藏数量-->
+    <update id="increaseBooksNum">
+        update bam.books set book_number = book_number+1 where id = #{id}
+    </update>
+    <!--查询所有-->
+    <select id="selectBooksAll" resultType="Books">
+        select * from bam.books
+    </select>
+    <!--根据书籍id查询-->
+    <select id="selectBooksById" resultType="Books">
+        select id,book_name,book_type,book_price,book_publish,book_number,book_text from bam.books where id like #{id}
+    </select>
+    <!--根据书籍名字查询-->
+    <select id="selectBooksByName" resultType="Books">
+        select id,book_name,book_type,book_price,book_publish,book_number,book_text from bam.books where book_name like '%' #{queryinfo} '%'
+    </select>
+    <!--根据书籍类别查找-->
+    <select id="selectBooksByType" resultType="Books">
+        select id,book_name,book_type,book_price,book_publish,book_number,book_text from bam.books where book_type like '%' #{queryinfo} '%'
+    </select>
+    <!--根据书籍出版社查找-->
+    <select id="selectBooksByPublish" resultType="Books">
+        select id,book_name,book_type,book_price,book_publish,book_number,book_text from bam.books where book_publish like '%' #{queryinfo} '%'
+    </select>
+</mapper>
